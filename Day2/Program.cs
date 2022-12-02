@@ -10,9 +10,9 @@ public enum opponent
 
 public enum move
 {
-    X = 1, //Rock
-    Y = 2, //Paper
-    Z = 3, //Scissors
+    X = 0, //Lose
+    Y = 3, //Draw
+    Z = 6, //Win
 }
 
 public class Day2
@@ -37,11 +37,58 @@ public class Day2
 
             score += yourChoice;
 
-            if (opponentChoice == yourChoice)
-                score += 3;
-            else if ((yourChoice == 1 && opponentChoice == 3) || (yourChoice == 2 && opponentChoice == 1) || (yourChoice == 3 && opponentChoice == 2))
+            switch (opponentChoice)
             {
-                score += 6;
+                case 1:
+                    {
+                        if (yourChoice == 3)
+                        {
+                            score += 1;
+                        }
+                        else if(yourChoice == 6)
+                        {
+                            score += 2;
+                        }
+                        else
+                        {
+                            score += 3;
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        if (yourChoice == 3)
+                        {
+                            score += 2;
+                        }
+                        else if (yourChoice == 6)
+                        {
+                            score += 3;
+                        }
+                        else
+                        {
+                            score += 1;
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        if (yourChoice == 3)
+                        {
+                            score += 3;
+                        }
+                        else if (yourChoice == 6)
+                        {
+                            score += 1;
+                        }
+                        else
+                        {
+                            score += 2;
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
         }
 
