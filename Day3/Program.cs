@@ -11,17 +11,15 @@
 
         var priority = 0;
 
-        foreach (var line in textInputByLines)
+        for (int i = 0; i < textInputByLines.Length; i+=3)
         {
-            var firstRucksack = line.Substring(0, (int)(line.Length / 2));
-            var secondRucksack = line.Substring((int)(line.Length / 2), (int)(line.Length / 2));
+            var firstElf = new string(textInputByLines[i].ToCharArray().Distinct().ToArray());
+            var secondElf = new string(textInputByLines[i + 1].ToCharArray().Distinct().ToArray());
+            var thirdElf = new string(textInputByLines[i + 2].ToCharArray().Distinct().ToArray());
 
-            firstRucksack = new string(firstRucksack.ToCharArray().Distinct().ToArray());
-            secondRucksack = new string(secondRucksack.ToCharArray().Distinct().ToArray());
-
-            foreach (var item in firstRucksack)
+            foreach (var item in firstElf)
             {
-                if (secondRucksack.Contains(item))
+                if (secondElf.Contains(item) && thirdElf.Contains(item))
                     priority += getCharacterValue(item);
             }
         }
