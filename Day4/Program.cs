@@ -18,10 +18,11 @@
             var firstElfRange = pair[0].Split("-").Select(Int32.Parse).ToArray();
             var secondElfRange = pair[1].Split("-").Select(Int32.Parse).ToArray();
 
-            if ((firstElfRange[0] >= secondElfRange[0] && firstElfRange[1] <= secondElfRange[1]) || (secondElfRange[0] >= firstElfRange[0] && secondElfRange[1] <= firstElfRange[1]))
-            {
+            var firstList = Enumerable.Range(firstElfRange[0], firstElfRange[1] - firstElfRange[0] +1).ToList();
+            var secondList = Enumerable.Range(secondElfRange[0], secondElfRange[1] - secondElfRange[0]+1).ToList();
+
+            if (firstList.Intersect(secondList).Any())
                 counter++;
-            }
         }
 
         Console.WriteLine("COUNTER: " + counter);
