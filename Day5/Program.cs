@@ -7,9 +7,9 @@ public class Day3
         var testInputPath = "../../../testInput.txt";
         var inputPath = "../../../input.txt";
 
-        var text = File.ReadAllLines(inputPath);
+        var text = File.ReadAllLines(testInputPath);
 
-        List<(int Number, List<string> Crates)> stacks = new List<(int Number, List<string> Crates)>(9)
+        List<(int Number, List<string> Crates)> stacks = new List<(int Number, List<string> Crates)>(3)
         {
             (1,new List<string>()),
             (2,new List<string>()),
@@ -43,10 +43,10 @@ public class Day3
 
                 for (int i = (cratesToMoveList.Count() - 1); i >= 0; i--)
                 {
-                    stacks.First(x => x.Number == moveTo).Crates.Add(cratesToMoveList[i]);
+                    stacks.First(x => x.Number == moveTo).Crates.Insert(0, cratesToMoveList[i]);
 
                 }
-                stacks.First(x => x.Number == moveFrom).Crates.RemoveAt(0);
+                stacks.First(x => x.Number == moveFrom).Crates.RemoveRange(0, crateToMoveCount);
             }
         }
 
