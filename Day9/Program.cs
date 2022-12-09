@@ -19,8 +19,7 @@ public class Position
     public void FollowHead(Position posToFollow)
     {
         if (Math.Abs(posToFollow.X - X) > 1 || Math.Abs(posToFollow.Y - Y) > 1)
-        {
-            
+        {     
             X += (posToFollow.X - X).CompareTo(0);
             Y += (posToFollow.Y - Y).CompareTo(0);
         }
@@ -39,8 +38,14 @@ public class Day3
 
         var tailVisited = new List<string>();
 
-        var head = new Position();
-        var tail = new Position();
+        int LEN = 10;
+
+        var bridge = new List<Position>();
+
+        for (int i = 0; i < LEN; i++)
+        {
+            bridge.Add(new Position());
+        }
 
         foreach (var line in text)
         {
@@ -49,12 +54,16 @@ public class Day3
 
             for (int i = 0; i < amount; i++)
             {
-                head.Reposition(direction);
+                bridge[0].Reposition(direction);
+                for (var j = 1; j < LEN; j++)
+                {
+                    bridge[j].FollowHead(bridge[j - 1]);
+                }
 
-                tail.FollowHead(head);
-                tailVisited.Add($"{tail.X}-{tail.Y}");
+                tailVisited.Add($"{bridge.Last().X}-{bridge.Last().Y}");
             }
         }
+
         Console.WriteLine("TAIL VISITED: " + tailVisited.Distinct().Count());
 
         Console.ReadKey();
