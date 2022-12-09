@@ -7,7 +7,7 @@
 
         var text = File.ReadAllText(inputPath);
 
-        const int SIGNAL = 4;
+        const int SIGNAL = 14;
 
         for (int i = 0; i < text.Length - SIGNAL; i++)
         {
