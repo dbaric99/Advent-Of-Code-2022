@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
 
 public class Day7
 {
@@ -18,7 +18,9 @@ public class Day7
             listOfMonkeys.Add(new Monkey(item));
         }
 
-        for (int i = 0; i < 20; i++)
+        var fac = listOfMonkeys.Aggregate(1, (long i, Monkey m) => i * m.Test);
+
+        for (long i = 0; i < 10000; i++)
         {
             foreach (var monkey in listOfMonkeys)
             {
@@ -27,12 +29,12 @@ public class Day7
                     var currentItem = monkey.Items[0];
                     monkey.Items.RemoveAt(0);
 
-                    var worryIndex = monkey.Operate(currentItem) / 3;
+                    var worryIndex = monkey.Operate(currentItem) % fac;
 
                     var test = worryIndex % monkey.Test == 0;
                     var nextMonkey = test ? monkey.VersionTrue : monkey.VersionFalse;
 
-                    listOfMonkeys[nextMonkey].Items.Add(worryIndex);
+                    listOfMonkeys[(int)nextMonkey].Items.Add(worryIndex);
 
                     monkey.Counter++;
                 }
@@ -51,25 +53,25 @@ public class Day7
 
 public class Monkey
 {
-    public int MonkeyId { get; set; }
+    public long MonkeyId { get; set; }
 
-    public List<int> Items { get; set; } = new List<int>();
+    public List<long> Items { get; set; } = new List<long>();
 
-    public (string Operation, int Factor) Operation { get; set; }
+    public (string Operation, long Factor) Operation { get; set; }
 
-    public int Test { get; set; }
+    public long Test { get; set; }
 
-    public int VersionTrue { get; set; }
+    public long VersionTrue { get; set; }
 
-    public int VersionFalse { get; set; }
+    public long VersionFalse { get; set; }
 
-    public int Counter { get; set; } = 0;
+    public long Counter { get; set; } = 0;
 
     public Monkey(string inputToParse)
     {
         var listOfInputs = inputToParse.Split("\n");
         
-        MonkeyId = int.Parse(listOfInputs[0].Split(" ")[1].Replace(":",""));
+        MonkeyId = long.Parse(listOfInputs[0].Split(" ")[1].Replace(":",""));
 
         var startingItems = listOfInputs[1].Replace(",","").Split(" ").ToList();
 
@@ -77,21 +79,21 @@ public class Monkey
 
         foreach (var item in startingItems)
         {
-            Items.Add(int.Parse(item));
+            Items.Add(long.Parse(item));
         }
 
         var operationLine = listOfInputs[2].Split(" ").ToList();
         
-        Operation = (Operation: operationLine[4], Factor: operationLine[5] == "old" ? 0 : int.Parse(operationLine[5]));
+        Operation = (Operation: operationLine[4], Factor: operationLine[5] == "old" ? 0 : long.Parse(operationLine[5]));
 
-        Test = int.Parse(listOfInputs[3].Split(" ")[3]);
+        Test = long.Parse(listOfInputs[3].Split(" ")[3]);
 
-        VersionTrue = int.Parse(listOfInputs[4].Split(" ")[5]);
+        VersionTrue = long.Parse(listOfInputs[4].Split(" ")[5]);
 
-        VersionFalse = int.Parse(listOfInputs[5].Split(" ")[5]);
+        VersionFalse = long.Parse(listOfInputs[5].Split(" ")[5]);
     }
 
-    public int Operate(int item)
+    public long Operate(long item)
     {
         var fac = Operation.Factor == 0 ? item : Operation.Factor;
 
