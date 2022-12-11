@@ -27,7 +27,7 @@ public class Position
 }
 
 
-public class Day3
+public class Day9
 {
     public static void Main()
     {
