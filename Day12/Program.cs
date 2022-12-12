@@ -35,7 +35,7 @@
 
         var elements = new List<(int, int, int)>
         {
-            (0, start.Item1, start.Item2)
+            (0, end.Item1, end.Item2)
         };
 
 
@@ -53,7 +53,7 @@
             }
             visited[i,j] = 1;
 
-            if ((i, j) == end)
+            if (Height(inputGrid[i][j]) == 0)
             {
                 Console.WriteLine("STEPS: " + steps);
                 break;
@@ -86,7 +86,7 @@
                 if (!((0 <= newX && newX < n) && (0 <= newY && newY < m)))
                     continue;
 
-                if (Height(inputGrid[newX][newY]) <= Height(inputGrid[x][y]) + 1)
+                if (Height(inputGrid[newX][newY]) >= Height(inputGrid[x][y]) - 1)
                     yield return (newX, newY);
             }
         }
