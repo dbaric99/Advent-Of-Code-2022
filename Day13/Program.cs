@@ -20,15 +20,17 @@ public class Day7
             pairCounter++;
         }
 
-        var counter = 0;
-
+        var sum = 0;
+        var counter = 1;
         foreach (var item in allPairs)
         {
-            if (Pair.Compare(item) > 0)
-                counter += (allPairs.IndexOf(item) + 1);
+            if (Pair.Compare(item) < 0)
+                sum += counter;
+
+            counter++;
         }
 
-        Console.WriteLine("ITEMS IN ORDER: " + counter);
+        Console.WriteLine("ITEMS IN ORDER: " + sum); //6623
 
         Console.ReadLine();
     }
@@ -73,26 +75,15 @@ public class Pair
             if (right is not JsonArray)
                 rightArr = new JsonArray((int)right);
 
-
-            var result = 0;
-            var i = 0;
-            foreach (var l in leftArr)
+            for (int i = 0; i < leftArr.Count && i < rightArr.Count; i++)
             {
-                if (i >= 0 && i < rightArr.Count())
+                int comparison = Compare(new Pair(leftArr[i].ToString(), rightArr[i].ToString()));
+                if (comparison != 0)
                 {
-                    var r = rightArr[i];
-                    result = Compare(new Pair(l.ToString(), r.ToString()));
-                    if (result != 0)
-                    {
-                        break;
-                    }
+                    return comparison;
                 }
-                i++;
             }
-
-
-
-            return result == 0 ? leftArr.Count - rightArr.Count : pairToCompare.Index;
+            return leftArr.Count - rightArr.Count;
         }
     }
 }
